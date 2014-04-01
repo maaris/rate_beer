@@ -1,5 +1,6 @@
 require "rate_beer/version"
+require 'rate_beer/configuration'
 
 module RateBeer
-  # Your code goes here...
+  extend Configuration
 end
