@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = RateBeer::VERSION
   spec.authors       = ["Māris Cīlītis"]
   spec.email         = ["maris@ithouse.lv"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = %q{A Ruby interface to Rate Beer API}
+  spec.description   = spec.summary
   spec.homepage      = ""
   spec.license       = "MIT"
 
