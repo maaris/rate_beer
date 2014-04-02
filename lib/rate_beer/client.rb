@@ -1,4 +1,5 @@
 require 'uri'
+require 'hashie'
 
 module RateBeer
   class Client

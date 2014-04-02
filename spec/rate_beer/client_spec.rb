@@ -32,8 +32,7 @@ describe RateBeer::Client do
         @config = {
           :api_key    => 'ak',
           :endpoint   => 'ep',
-          :user_agent => 'ua',
-          :method     => 'hm',
+          :user_agent => 'ua'
         }
       end
 
