@@ -81,10 +81,23 @@ describe RateBeer::Client do
       expect(response).to be_a(Array)
     end
 
-    # describe "response" do 
-    #   it "should return correct values" do
-    #     expect(response.beer_id).to eq(12345)
-    #   end
-    # end
+    describe "response" do 
+      subject { response[0] }
+
+      it "should return correct values" do
+        expect(subject.beer_id).to eq(12345)
+        expect(subject.beer_name).to eq("Acoustic Harmonic Bzzz")
+        expect(subject.brewer_id).to eq(12147)
+        expect(subject.brewer_name).to eq("Acoustic Brewing Company")
+        expect(subject.overall_pctl).to eq(57.751660219715)
+        expect(subject.style_pctl).to eq(53.0867326920712)
+        expect(subject.beer_style_name).to eq("Mead")
+        expect(subject.alcohol).to eq(6)
+        expect(subject.ibu).to eq(nil)
+        expect(subject.description).to eq("Honey-apple-cherry wine fermented and flavored with natural fruit and spices.")
+        expect(subject.is_alias).to eq(false)
+        
+      end
+    end
   end
 end

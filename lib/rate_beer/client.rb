@@ -24,14 +24,19 @@ module RateBeer
     def parsed_response(response)
       parsed_array = JSON.parse(response.body)
       parsed_array.each_with_index do |hash, index|
-        hash = hash_with_symbolized_keys(hash)
+        hash = hash_with_transformed_keys(hash)
+        hash = transformed_to_mash(hash)
         parsed_array[index] = hash
       end
       parsed_array
     end
 
-    def hash_with_symbolized_keys(hash)
-      hash.inject({}){|memo,(k,v)| memo[k.underscore.to_sym] = v; memo}
+    def hash_with_transformed_keys(hash)
+      hash.inject({}){|memo,(k,v)| memo[k.underscore] = v; memo}
+    end
+
+    def transformed_to_mash(hash)
+      Hashie::Mash.new(hash)
     end
   end
 end
