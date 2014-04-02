@@ -24,7 +24,7 @@ Configuration
 
 ```ruby
 RateBeer.configure do |config|
-  config.API_KEY = "YOUR_DEVELOPER_KEY"
+  config.api_key = "YOUR_DEVELOPER_KEY"
 end
 ```
 
