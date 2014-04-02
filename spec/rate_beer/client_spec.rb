@@ -69,15 +69,15 @@ describe RateBeer::Client do
 
   let(:client) { described_class.new(api_key: "secret123") }
 
-  describe "#get_beer_by_id" do
+  describe "#beer_info_by_id" do
     before do 
       stub_request(:get, "http://ratebeer.com/json/bff.asp?bd=12345&k=secret123").
-         to_return(:status => 200, :body => beer_response, :headers => {})
+         to_return(:status => 200, :body => response_by_beer_id, :headers => {})
     end
 
-    let(:response) { client.get_beer_by_id("12345") }
+    let(:response) { client.beer_info_by_id("12345") }
 
-    it "should return hash" do
+    it "should return Array" do
       expect(response).to be_a(Array)
     end
 
@@ -96,7 +96,34 @@ describe RateBeer::Client do
         expect(subject.ibu).to eq(nil)
         expect(subject.description).to eq("Honey-apple-cherry wine fermented and flavored with natural fruit and spices.")
         expect(subject.is_alias).to eq(false)
-        
+      end
+    end
+  end
+
+  describe "#beer_info_by_name" do
+    before do 
+      stub_request(:get, "http://ratebeer.com/jsonbff.asp?bn=Acoustic%20Harmonic%20Bzzz&k=secret123&rc=1&vg=1").
+         to_return(:status => 200, :body => response_by_beer_name, :headers => {})
+    end
+
+    let(:response) { client.beer_info_by_name("Acoustic Harmonic Bzzz") }
+
+    it "should return Array" do
+      expect(response).to be_a(Array)
+    end
+
+    describe "response" do 
+      subject { response[0] }
+
+      it "should return correct values" do
+        expect(subject.beer_id).to eq(12345)
+        expect(subject.beer_name).to eq("Acoustic Harmonic Bzzz")
+        expect(subject.overall_pctl).to eq(57.751660219715)
+        expect(subject.style_pctl).to eq(53.0867326920712)
+        expect(subject.is_alias).to eq(false)
+        expect(subject.rate_count).to eq(9)
+        expect(subject.average_rating).to eq(3.156209)
+        expect(subject.real_average).to eq(3.433333)
       end
     end
   end

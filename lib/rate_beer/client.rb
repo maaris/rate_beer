@@ -1,3 +1,5 @@
+require 'uri'
+
 module RateBeer
   class Client
     include HTTParty
@@ -14,8 +16,14 @@ module RateBeer
       end
     end
 
-    def get_beer_by_id(beer_id)
+    def beer_info_by_id(beer_id)
       response = self.class.get("/bff.asp?bd=#{beer_id}&k=#{api_key}")
+      parsed_response(response)
+    end
+
+    def beer_info_by_name(beer_name)
+      beer_name = URI.escape(beer_name)
+      response = self.class.get("bff.asp?bn=#{beer_name}&k=#{api_key}&vg=1&rc=1")
       parsed_response(response)
     end
 
