@@ -15,6 +15,10 @@ module RateBeer
       base.reset
     end
 
+    def options
+      Hash[ * VALID_CONFIG_KEYS.map { |key| [key, send(key)] }.flatten ]
+    end
+
     def configure
       yield self
     end
