@@ -4,6 +4,17 @@ module RateBeer
   class Client
     include HTTParty
 
+    SORT_OPTIONS = {
+      latest: 1,
+      top_raters: 2,
+      highest_ratings: 3
+    }.freeze
+
+    DEFAULT_OPTIONS = {
+      page: 1,
+      sort_by: SORT_OPTIONS[:latest]
+    }.freeze
+
     base_uri Configuration::DEFAULT_ENDPOINT
 
     attr_accessor *Configuration::VALID_CONFIG_KEYS
@@ -23,11 +34,21 @@ module RateBeer
 
     def beer_info_by_name(beer_name)
       beer_name = URI.escape(beer_name)
-      response = self.class.get("bff.asp?bn=#{beer_name}&k=#{api_key}&vg=1&rc=1")
+      response = self.class.get("/bff.asp?bn=#{beer_name}&k=#{api_key}&vg=1&rc=1")
+      parsed_response(response)
+    end
+
+    def beer_reviews(beer_id, options = {})
+      options = merge_with_default_options(options)
+      response = self.class.get("/gr.asp?bid=#{beer_id}&s=#{options[:sort_by]}&p=#{options[:page]}&k=#{api_key}")
       parsed_response(response)
     end
 
     private
+
+    def merge_with_default_options(options)
+      DEFAULT_OPTIONS.merge(options)
+    end
 
     def parsed_response(response)
       parsed_array = JSON.parse(response.body)

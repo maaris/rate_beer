@@ -102,7 +102,7 @@ describe RateBeer::Client do
 
   describe "#beer_info_by_name" do
     before do 
-      stub_request(:get, "http://ratebeer.com/jsonbff.asp?bn=Acoustic%20Harmonic%20Bzzz&k=secret123&rc=1&vg=1").
+      stub_request(:get, "http://ratebeer.com/json/bff.asp?bn=Acoustic%20Harmonic%20Bzzz&k=secret123&rc=1&vg=1").
          to_return(:status => 200, :body => response_by_beer_name, :headers => {})
     end
 
@@ -124,6 +124,54 @@ describe RateBeer::Client do
         expect(subject.rate_count).to eq(9)
         expect(subject.average_rating).to eq(3.156209)
         expect(subject.real_average).to eq(3.433333)
+      end
+    end
+  end
+
+  describe "#beer_reviews" do 
+    before do 
+      stub_request(:get, "http://ratebeer.com/json/gr.asp?bid=12345&k=secret123&p=1&s=1").
+         to_return(:status => 200, :body => beer_reviews_response, :headers => {})
+    end
+
+    let(:response) { client.beer_reviews("12345") }
+    let(:review) { response.first }
+
+    it "should return Array" do
+      expect(response).to be_a(Array)
+    end
+
+    describe "response" do 
+      subject { response }
+
+      it "should contain hashes" do
+        expect(subject.first).to be_a(Hash)
+      end
+
+      it "should contain 2 reviews" do
+        expect(subject.count).to eq(2)
+      end
+
+      it "should contain correct values" do
+        expect(review.result_num).to eq(1)
+        expect(review.rating_id).to eq(5525608)
+        expect(review.appearance).to eq(3)
+        expect(review.aroma).to eq(6)
+        expect(review.flavor).to eq(6)
+        expect(review.mouthfeel).to eq(3)
+        expect(review.overall).to eq(12)
+        expect(review.total_score).to eq(3)
+        expect(review.comments).to eq("Bottle. Clear gold with a thin white head. Aroma of honey and slight apple. Flavor of honey and lemon soda.")
+        expect(review.time_entered).to eq("3/9/2014 11:55:13 AM")
+        expect(review.time_updated).to eq(nil)
+        expect(review.user_id).to eq(76728)
+        expect(review.user_name).to eq("JaBier")
+        expect(review.city).to eq("Capital City")
+        expect(review.state_id).to eq(35)
+        expect(review.state).to eq("Ohio")
+        expect(review.country_id).to eq(213)
+        expect(review.country).to eq("United States")
+        expect(review.rate_count).to eq(4443)
       end
     end
   end
