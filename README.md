@@ -1,6 +1,7 @@
 # RateBeer
 
-TODO: Write a gem description
+Rate Beer
+    To work with Rate Beer API, you need to obtain a developer key from Rate Beer. More information: http://www.ratebeer.com/json/ratebeerapi.asp
 
 ## Installation
 
@@ -16,9 +17,29 @@ Or install it yourself as:
 
     $ gem install rate_beer
 
+
 ## Usage
 
-TODO: Write usage instructions here
+Configuration
+
+```ruby
+RateBeer.configure do |config|
+  config.API_KEY = "YOUR_DEVELOPER_KEY"
+end
+```
+
+You can also pass api key directly to the client:
+
+```ruby
+  client = RateBeer::Client.new(api_key: "YOUR_DEVELOPER_KEY")
+```
+
+Now you can use the api like this:
+
+```ruby
+  # pass beer id as an argument
+  reviews = client.beer_reviews("162170")
+```
 
 ## Contributing
 
