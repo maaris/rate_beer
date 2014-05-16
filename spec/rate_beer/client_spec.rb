@@ -70,7 +70,7 @@ describe RateBeer::Client do
 
   describe "#beer_info_by_id" do
     before do 
-      stub_request(:get, "http://ratebeer.com/json/bff.asp?bd=12345&k=secret123").
+      stub_request(:get, "http://ratebeer.com/json/bff.asp?bd=12345&k=secret123&vg=1").
          to_return(:status => 200, :body => response_by_beer_id, :headers => {})
     end
 
