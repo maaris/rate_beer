@@ -40,6 +40,7 @@ Now you can use the api like this:
   # pass beer id as an argument
   reviews = client.beer_reviews("162170")
 ```
+as a result you will get array with Hashie::Mash hashies.
 
 ## Contributing
 

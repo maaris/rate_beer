@@ -29,7 +29,7 @@ module RateBeer
     end
 
     def beer_info_by_id(beer_id)
-      response = self.class.get("/bff.asp?bd=#{beer_id}&k=#{api_key}")
+      response = self.class.get("/bff.asp?bd=#{beer_id}&k=#{api_key}&vg=1")
       parsed_response(response)
     end
 
